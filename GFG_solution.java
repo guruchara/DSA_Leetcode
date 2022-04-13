@@ -327,3 +327,114 @@ class Solution
 
 ------------------------------------------------------------------------------------------
 
+Collect Max Gold from given matrix : 
+
+// by using recursion  I got Time Complexity Exceed 
+
+// recursion solution 
+
+class Solution{
+    public static int goldcollect(int a[][],int i,int j, int r,int c)
+    {
+        
+        if(i<0 || j<0 || i==r || c==j)
+        {
+            return 0;
+        }
+        
+        // if(dp[i][j]!=-1)
+        // {
+        //     return dp[i][j];
+        // }
+        //rud right upper diagonal
+        int rud=goldcollect(a,i-1,j+1,r,c);
+        
+        //right  now i am calling in right side 
+        int right=goldcollect(a,i,j+1,r,c);
+        
+        // rdd right down diagonal
+        int rdd=goldcollect(a,i+1,j+1,r,c);
+        
+        int max=Math.max(Math.max(rud,rdd),right);
+        
+         return max+a[i][j];
+    }
+    public static int maxgold(int a[][],int r,int c)
+    {
+        // int dp[][]=new int[r][c];
+        
+        //  for(int val[]:dp)
+        //  {
+        //      Arrays.fill(val,-1);
+        //  }
+         
+        int max=0;
+        
+        for(int i=0;i<a.length;i++){
+            
+            max=Math.max(max,goldcollect(a,i,0,r,c));
+        }
+        return max;
+    }
+    static int maxGold(int n, int m, int M[][])
+    {
+         int ans=maxgold(M,n,m);
+         return ans;
+    }
+}
+
+
+// So here I am using Memoiozation All Test Cases Pases
+
+class Solution{
+    public static int goldcollect(int a[][],int i,int j, int r,int c,int dp[][])
+    {
+        
+        if(i<0 || j<0 || i==r || c==j)
+        {
+            return 0;
+        }
+        
+        if(dp[i][j]!=-1)
+        {
+            return dp[i][j];
+        }
+        //rud right upper diagonal
+        int rud=goldcollect(a,i-1,j+1,r,c,dp);
+        
+        //right  now i am calling in right side 
+        int right=goldcollect(a,i,j+1,r,c,dp);
+        
+        // rdd right down diagonal
+        int rdd=goldcollect(a,i+1,j+1,r,c,dp);
+        
+        int max=Math.max(Math.max(rud,rdd),right);
+        
+        return dp[i][j]= max+a[i][j];
+    }
+    public static int maxgold(int a[][],int r,int c)
+    {
+        int dp[][]=new int[r][c];
+        
+         for(int val[]:dp)
+         {
+             Arrays.fill(val,-1);
+         }
+         
+        int max=0;
+        
+        for(int i=0;i<a.length;i++){
+            
+            max=Math.max(max,goldcollect(a,i,0,r,c,dp));
+        }
+        return max;
+    }
+    static int maxGold(int n, int m, int M[][])
+    {
+         int ans=maxgold(M,n,m);
+         return ans;
+    }
+}
+
+
+----------------------------------------------------------------------------
